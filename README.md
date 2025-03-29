@@ -103,14 +103,32 @@ The use of the term `n-1` is commonly referred to as Bessel's correction. Note, 
 
 <!-- /.intro -->
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/stats-base-nanstdevch
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
 ```javascript
-import nanstdevch from 'https://cdn.jsdelivr.net/gh/stdlib-js/stats-base-nanstdevch@deno/mod.js';
+var nanstdevch = require( '@stdlib/stats-base-nanstdevch' );
 ```
 
 #### nanstdevch( N, correction, x, stride )
@@ -134,7 +152,7 @@ The function has the following parameters:
 The `N` and `stride` parameters determine which elements in `x` are accessed at runtime. For example, to compute the [standard deviation][standard-deviation] of every other element in `x`,
 
 ```javascript
-import floor from 'https://cdn.jsdelivr.net/gh/stdlib-js/math-base-special-floor@deno/mod.js';
+var floor = require( '@stdlib/math-base-special-floor' );
 
 var x = [ 1.0, 2.0, 2.0, -7.0, -2.0, 3.0, 4.0, 2.0, NaN ];
 var N = floor( x.length / 2 );
@@ -148,8 +166,8 @@ Note that indexing is relative to the first index. To introduce an offset, use [
 <!-- eslint-disable stdlib/capitalized-comments -->
 
 ```javascript
-import Float64Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float64@deno/mod.js';
-import floor from 'https://cdn.jsdelivr.net/gh/stdlib-js/math-base-special-floor@deno/mod.js';
+var Float64Array = require( '@stdlib/array-float64' );
+var floor = require( '@stdlib/math-base-special-floor' );
 
 var x0 = new Float64Array( [ 2.0, 1.0, 2.0, -2.0, -2.0, 2.0, 3.0, 4.0, NaN ] );
 var x1 = new Float64Array( x0.buffer, x0.BYTES_PER_ELEMENT*1 ); // start at 2nd element
@@ -178,7 +196,7 @@ The function has the following additional parameters:
 While [`typed array`][mdn-typed-array] views mandate a view offset based on the underlying `buffer`, the `offset` parameter supports indexing semantics based on a starting index. For example, to calculate the [standard deviation][standard-deviation] for every other value in `x` starting from the second value
 
 ```javascript
-import floor from 'https://cdn.jsdelivr.net/gh/stdlib-js/math-base-special-floor@deno/mod.js';
+var floor = require( '@stdlib/math-base-special-floor' );
 
 var x = [ 2.0, 1.0, 2.0, -2.0, -2.0, 2.0, 3.0, 4.0 ];
 var N = floor( x.length / 2 );
@@ -198,7 +216,7 @@ var v = nanstdevch.ndarray( N, 1, x, 2, 1 );
 -   If `N <= 0`, both functions return `NaN`.
 -   If `n - c` is less than or equal to `0` (where `c` corresponds to the provided degrees of freedom adjustment and `n` corresponds to the number of non-`NaN` indexed elements), both functions return `NaN`.
 -   The underlying algorithm is a specialized case of Neely's two-pass algorithm. As the standard deviation is invariant with respect to changes in the location parameter, the underlying algorithm uses the first strided array element as a trial mean to shift subsequent data values and thus mitigate catastrophic cancellation. Accordingly, the algorithm's accuracy is best when data is **unordered** (i.e., the data is **not** sorted in either ascending or descending order such that the first value is an "extreme" value).
--   Depending on the environment, the typed versions ([`dnanstdevch`][@stdlib/stats/base/dnanstdevch], [`snanstdevch`][@stdlib/stats/base/snanstdevch], etc.) are likely to be significantly more performant.
+-   Depending on the environment, the typed versions ([`dnanstdevch`][@stdlib/stats/strided/dnanstdevch], [`snanstdevch`][@stdlib/stats/base/snanstdevch], etc.) are likely to be significantly more performant.
 
 </section>
 
@@ -211,10 +229,10 @@ var v = nanstdevch.ndarray( N, 1, x, 2, 1 );
 <!-- eslint no-undef: "error" -->
 
 ```javascript
-import randu from 'https://cdn.jsdelivr.net/gh/stdlib-js/random-base-randu@deno/mod.js';
-import round from 'https://cdn.jsdelivr.net/gh/stdlib-js/math-base-special-round@deno/mod.js';
-import Float64Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float64@deno/mod.js';
-import nanstdevch from 'https://cdn.jsdelivr.net/gh/stdlib-js/stats-base-nanstdevch@deno/mod.js';
+var randu = require( '@stdlib/random-base-randu' );
+var round = require( '@stdlib/math-base-special-round' );
+var Float64Array = require( '@stdlib/array-float64' );
+var nanstdevch = require( '@stdlib/stats-base-nanstdevch' );
 
 var x;
 var i;
@@ -256,7 +274,7 @@ console.log( v );
 
 ## See Also
 
--   <span class="package-name">[`@stdlib/stats-base/dnanstdevch`][@stdlib/stats/base/dnanstdevch]</span><span class="delimiter">: </span><span class="description">calculate the standard deviation of a double-precision floating-point strided array ignoring NaN values and using a one-pass trial mean algorithm.</span>
+-   <span class="package-name">[`@stdlib/stats-strided/dnanstdevch`][@stdlib/stats/strided/dnanstdevch]</span><span class="delimiter">: </span><span class="description">calculate the standard deviation of a double-precision floating-point strided array ignoring NaN values and using a one-pass trial mean algorithm.</span>
 -   <span class="package-name">[`@stdlib/stats-base/nanvariancech`][@stdlib/stats/base/nanvariancech]</span><span class="delimiter">: </span><span class="description">calculate the variance of a strided array ignoring NaN values and using a one-pass trial mean algorithm.</span>
 -   <span class="package-name">[`@stdlib/stats-base/nanstdev`][@stdlib/stats/base/nanstdev]</span><span class="delimiter">: </span><span class="description">calculate the standard deviation of a strided array ignoring NaN values.</span>
 -   <span class="package-name">[`@stdlib/stats-base/snanstdevch`][@stdlib/stats/base/snanstdevch]</span><span class="delimiter">: </span><span class="description">calculate the standard deviation of a single-precision floating-point strided array ignoring NaN values and using a one-pass trial mean algorithm.</span>
@@ -275,7 +293,7 @@ console.log( v );
 
 ## Notice
 
-This package is part of [stdlib][stdlib], a standard library with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
+This package is part of [stdlib][stdlib], a standard library for JavaScript and Node.js, with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
 
 For more information on the project, filing bug reports and feature requests, and guidance on how to develop [stdlib][stdlib], see the main project [repository][stdlib].
 
@@ -292,7 +310,7 @@ See [LICENSE][stdlib-license].
 
 ## Copyright
 
-Copyright &copy; 2016-2024. The Stdlib [Authors][stdlib-authors].
+Copyright &copy; 2016-2025. The Stdlib [Authors][stdlib-authors].
 
 </section>
 
@@ -354,15 +372,15 @@ Copyright &copy; 2016-2024. The Stdlib [Authors][stdlib-authors].
 
 <!-- <related-links> -->
 
-[@stdlib/stats/base/dnanstdevch]: https://github.com/stdlib-js/stats-base-dnanstdevch/tree/deno
+[@stdlib/stats/strided/dnanstdevch]: https://github.com/stdlib-js/stats-strided-dnanstdevch
 
-[@stdlib/stats/base/nanvariancech]: https://github.com/stdlib-js/stats-base-nanvariancech/tree/deno
+[@stdlib/stats/base/nanvariancech]: https://github.com/stdlib-js/stats-base-nanvariancech
 
-[@stdlib/stats/base/nanstdev]: https://github.com/stdlib-js/stats-base-nanstdev/tree/deno
+[@stdlib/stats/base/nanstdev]: https://github.com/stdlib-js/stats-base-nanstdev
 
-[@stdlib/stats/base/snanstdevch]: https://github.com/stdlib-js/stats-base-snanstdevch/tree/deno
+[@stdlib/stats/base/snanstdevch]: https://github.com/stdlib-js/stats-base-snanstdevch
 
-[@stdlib/stats/base/stdevch]: https://github.com/stdlib-js/stats-base-stdevch/tree/deno
+[@stdlib/stats/base/stdevch]: https://github.com/stdlib-js/stats-base-stdevch
 
 <!-- </related-links> -->
 
